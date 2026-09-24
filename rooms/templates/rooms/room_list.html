@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Available Rooms</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    <style>
+
+        /* =====================================
+           ROOMS PAGE
+        ===================================== */
+
+        body {
+            background: #f8fafc;
+        }
+
+
+        /* Header */
+
+        .rooms-header {
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #b91c1c
+            );
+
+            color: white;
+
+            padding: 18px 40px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .rooms-header-content {
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .rooms-logo {
+            width: 45px;
+            height: 45px;
+
+            background: white;
+
+            color: #b91c1c;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+
+            font-size: 20px;
+        }
+
+        .rooms-header h1 {
+            margin: 0;
+
+            font-size: 24px;
+        }
+
+        .rooms-header p {
+            margin: 2px 0 0;
+
+            font-size: 12px;
+
+            opacity: 0.85;
+        }
+
+
+        /* Main */
+
+        .rooms-container {
+
+            max-width: 1100px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* Page Heading */
+
+        .page-heading {
+
+            margin-bottom: 30px;
+        }
+
+        .page-heading h2 {
+
+            margin: 0;
+
+            color: #1f2937;
+
+            font-size: 30px;
+        }
+
+        .page-heading p {
+
+            margin-top: 7px;
+
+            color: #64748b;
+
+            font-size: 15px;
+        }
+
+
+        /* Back */
+
+        .rooms-back {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #b91c1c;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .rooms-back:hover {
+
+            color: #991b1b;
+        }
+
+
+        /* Room Grid */
+
+        .room-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(290px, 360px)
+        );
+
+    gap: 22px;
+
+    justify-content: start;
+}
+
+
+        /* Room Card */
+
+        .room-card {
+    background: white;
+
+    width: 100%;
+
+    padding: 25px;
+
+    border-radius: 14px;
+
+    border: 1px solid #f1f5f9;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
+
+    transition: 0.25s;
+}
+
+        .room-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.10);
+        }
+
+
+        /* Room Icon */
+
+        .room-icon {
+
+            width: 55px;
+            height: 55px;
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* Room Name */
+
+        .room-card h2 {
+
+            margin: 0 0 18px;
+
+            color: #991b1b;
+
+            font-size: 21px;
+        }
+
+
+        /* Room Information */
+
+        .room-info {
+
+            margin-bottom: 8px;
+
+            color: #475569;
+
+            font-size: 14px;
+        }
+
+        .room-info strong {
+
+            color: #1f2937;
+        }
+
+
+        /* Status */
+
+        .status-badge {
+
+            display: inline-block;
+
+            padding: 5px 11px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-top: 5px;
+        }
+
+        .available {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .unavailable {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+
+        /* Booking Button */
+
+        .book-button {
+
+            display: block;
+
+            margin-top: 20px;
+
+            padding: 11px 16px;
+
+            background: #b91c1c;
+
+            color: white;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .book-button:hover {
+
+            background: #991b1b;
+
+            color: white;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* Empty */
+
+        .empty {
+
+            background: white;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty h2 {
+
+            margin-top: 0;
+
+            color: #991b1b;
+        }
+
+        .empty p {
+
+            color: #64748b;
+        }
+
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+
+            .rooms-header {
+
+                padding: 15px 20px;
+            }
+
+            .rooms-container {
+
+                margin: 25px auto;
+            }
+
+            .page-heading h2 {
+
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="rooms-header">
+
+    <div class="rooms-header-content">
+
+        <div class="rooms-logo">
+            FS
+        </div>
+
+        <div>
+
+            <h1>
+                Available Rooms
+            </h1>
+
+            <p>
+                Faculty of Science and Technology
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
+
+<div class="rooms-container">
+
+
+    <a href="{% url 'home' %}"
+       class="rooms-back">
+
+        ← Back to Home
+
+    </a>
+
+
+    <div class="page-heading">
+
+        <h2>
+            Available Classrooms
+        </h2>
+
+        <p>
+            Check classroom availability and make a booking.
+        </p>
+
+    </div>
+
+
+
+    {% if rooms %}
+
+
+        <div class="room-grid">
+
+
+            {% for room in rooms %}
+
+
+                <div class="room-card">
+
+
+                    <div class="room-icon">
+                        R
+                    </div>
+
+
+                    <h2>
+                        Room {{ room.room_name }}
+                    </h2>
+
+
+                    <p class="room-info">
+
+                        <strong>
+                            Building:
+                        </strong>
+
+                        {{ room.building }}
+
+                    </p>
+
+
+                    <p class="room-info">
+
+                        <strong>
+                            Capacity:
+                        </strong>
+
+                        {{ room.capacity }} people
+
+                    </p>
+
+
+                    <p class="room-info">
+
+                        <strong>
+                            Description:
+                        </strong>
+
+                        {{ room.description|default:"-" }}
+
+                    </p>
+
+
+                    <p class="room-info">
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+                        {% if room.status == "available" %}
+
+                            <span class="status-badge available">
+
+                                Available
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge unavailable">
+
+                                Unavailable
+
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    {% if room.status == "available" %}
+
+                        <a
+                            href="{% url 'book_room' room.id %}"
+                            class="book-button"
+                        >
+
+                            Book This Room
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <h2>
+                No Rooms Available
+            </h2>
+
+            <p>
+                There are currently no rooms in the system.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

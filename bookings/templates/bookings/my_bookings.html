@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Bookings</title>
+
+
+    <style>
+
+        /* =====================================
+           GLOBAL
+        ===================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f8fafc;
+
+            color: #1f2937;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        header {
+
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #b91c1c
+            );
+
+            color: white;
+
+            padding: 18px 40px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+
+        .header-content {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .logo {
+
+            width: 48px;
+
+            height: 48px;
+
+            background: white;
+
+            color: #b91c1c;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .header-text h1 {
+
+            margin: 0;
+
+            font-size: 24px;
+        }
+
+
+        .header-text p {
+
+            margin: 3px 0 0;
+
+            font-size: 13px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =====================================
+           CONTAINER
+        ===================================== */
+
+        .container {
+
+            max-width: 1000px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* =====================================
+           BACK LINK
+        ===================================== */
+
+        .back-link {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #b91c1c;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .back-link:hover {
+
+            color: #991b1b;
+        }
+
+
+        /* =====================================
+           PAGE HEADING
+        ===================================== */
+
+        .page-heading {
+
+            margin-bottom: 30px;
+        }
+
+
+        .page-heading h2 {
+
+            margin: 0;
+
+            color: #1f2937;
+
+            font-size: 30px;
+        }
+
+
+        .page-heading p {
+
+            margin-top: 7px;
+
+            color: #64748b;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================
+           BOOKING CARD
+        ===================================== */
+
+        .booking-card {
+
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 22px;
+
+            border-radius: 14px;
+
+            border: 1px solid #f1f5f9;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+
+            transition: 0.25s;
+        }
+
+
+        .booking-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 22px rgba(0, 0, 0, 0.09);
+        }
+
+
+        /* =====================================
+           BOOKING HEADER
+        ===================================== */
+
+        .booking-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .booking-header h3 {
+
+            margin: 0;
+
+            color: #991b1b;
+
+            font-size: 20px;
+        }
+
+
+        /* =====================================
+           ITEM BOX
+        ===================================== */
+
+        .item-box {
+
+            background: #fef2f2;
+
+            border: 1px solid #fee2e2;
+
+            color: #991b1b;
+
+            padding: 13px 15px;
+
+            border-radius: 9px;
+
+            margin-bottom: 12px;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================
+           BOOKING INFORMATION
+        ===================================== */
+
+        .booking-info {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+            margin-top: 18px;
+        }
+
+
+        .info-box {
+
+            background: #f8fafc;
+
+            border-radius: 9px;
+
+            padding: 13px 15px;
+
+            border: 1px solid #f1f5f9;
+        }
+
+
+        .info-label {
+
+            display: block;
+
+            font-size: 12px;
+
+            color: #64748b;
+
+            margin-bottom: 5px;
+        }
+
+
+        .info-value {
+
+            font-size: 14px;
+
+            color: #1f2937;
+
+            font-weight: 500;
+        }
+
+
+        /* =====================================
+           PURPOSE
+        ===================================== */
+
+        .purpose-box {
+
+            margin-top: 15px;
+
+            padding: 13px 15px;
+
+            background: #f8fafc;
+
+            border-radius: 9px;
+
+            border: 1px solid #f1f5f9;
+        }
+
+
+        .purpose-box strong {
+
+            display: block;
+
+            font-size: 12px;
+
+            color: #64748b;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        .status-area {
+
+            margin-top: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .status-label {
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding: 6px 13px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+
+        .approved {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        .rejected {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+
+        .cancelled {
+
+            background: #e5e7eb;
+
+            color: #374151;
+        }
+
+
+        /* =====================================
+           CANCEL BUTTON
+        ===================================== */
+
+        .booking-actions {
+
+            margin-top: 20px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #f1f5f9;
+        }
+
+
+        .cancel-button {
+
+            padding: 10px 16px;
+
+            background: #dc2626;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .cancel-button:hover {
+
+            background: #b91c1c;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================
+           EMPTY
+        ===================================== */
+
+        .empty {
+
+            background: white;
+
+            padding: 50px 30px;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            border: 1px solid #f1f5f9;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .empty-icon {
+
+            width: 60px;
+
+            height: 60px;
+
+            margin: 0 auto 18px;
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+
+        .empty h2 {
+
+            margin: 0 0 8px;
+
+            color: #991b1b;
+        }
+
+
+        .empty p {
+
+            color: #64748b;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================
+           BOOK BUTTON
+        ===================================== */
+
+        .book-button {
+
+            display: inline-block;
+
+            margin: 5px;
+
+            padding: 11px 18px;
+
+            background: #b91c1c;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .book-button:hover {
+
+            background: #991b1b;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                padding: 15px 20px;
+            }
+
+
+            .container {
+
+                margin: 25px auto;
+            }
+
+
+            .booking-card {
+
+                padding: 20px;
+            }
+
+
+            .booking-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .booking-info {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header>
+
+    <div class="header-content">
+
+        <div class="logo">
+            FS
+        </div>
+
+        <div class="header-text">
+
+            <h1>
+                Faculty Science Booking
+            </h1>
+
+            <p>
+                Faculty of Science and Technology
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
+
+<div class="container">
+
+
+    <a href="{% url 'home' %}"
+       class="back-link">
+
+        ← Back to Home
+
+    </a>
+
+
+
+    <div class="page-heading">
+
+        <h2>
+            My Bookings
+        </h2>
+
+        <p>
+            View your booking history and check booking status.
+        </p>
+
+    </div>
+
+
+
+    {% if bookings %}
+
+
+        {% for booking in bookings %}
+
+
+            <div class="booking-card">
+
+
+                <!-- Booking Header -->
+
+                <div class="booking-header">
+
+                    <h3>
+                        Booking #{{ booking.id }}
+                    </h3>
+
+                </div>
+
+
+
+                <!-- Room -->
+
+                {% if booking.room %}
+
+                    <div class="item-box">
+
+                        <strong>
+                            Room:
+                        </strong>
+
+                        {{ booking.room.room_name }}
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- Device -->
+
+                {% if booking.device %}
+
+                    <div class="item-box">
+
+                        <strong>
+                            Device:
+                        </strong>
+
+                        {{ booking.device.device_name }}
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- Booking Information -->
+
+                <div class="booking-info">
+
+
+                    <div class="info-box">
+
+                        <span class="info-label">
+                            Booking Date
+                        </span>
+
+                        <span class="info-value">
+                            {{ booking.booking_date }}
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="info-box">
+
+                        <span class="info-label">
+                            Time
+                        </span>
+
+                        <span class="info-value">
+
+                            {{ booking.start_time }}
+                            -
+                            {{ booking.end_time }}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- Purpose -->
+
+                <div class="purpose-box">
+
+                    <strong>
+                        Purpose
+                    </strong>
+
+                    {{ booking.purpose }}
+
+                </div>
+
+
+
+                <!-- Status -->
+
+                <div class="status-area">
+
+                    <span class="status-label">
+                        Status:
+                    </span>
+
+                    <span class="status {{ booking.status }}">
+
+                        {{ booking.get_status_display }}
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- Cancel -->
+
+                {% if booking.status != "cancelled" %}
+
+                    <div class="booking-actions">
+
+                        <form
+                            method="POST"
+                            action="{% url 'cancel_booking' booking.id %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="cancel-button"
+                            >
+
+                                Cancel Booking
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+
+            <div class="empty-icon">
+                B
+            </div>
+
+
+            <h2>
+                No Bookings Yet
+            </h2>
+
+
+            <p>
+                You do not have any bookings yet.
+            </p>
+
+
+            <a
+                href="{% url 'room_list' %}"
+                class="book-button"
+            >
+                Browse Rooms
+            </a>
+
+
+            <a
+                href="{% url 'device_list' %}"
+                class="book-button"
+            >
+                Browse Devices
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if device %}
+            Book a Device
+        {% else %}
+            Book a Room
+        {% endif %}
+    </title>
+
+
+    <style>
+
+        /* =====================================
+           GLOBAL
+        ===================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f8fafc;
+
+            color: #1f2937;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        header {
+
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #b91c1c
+            );
+
+            color: white;
+
+            padding: 18px 40px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+
+        .header-content {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .logo {
+
+            width: 48px;
+
+            height: 48px;
+
+            background: white;
+
+            color: #b91c1c;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .header-text h1 {
+
+            margin: 0;
+
+            font-size: 24px;
+        }
+
+
+        .header-text p {
+
+            margin: 3px 0 0;
+
+            font-size: 13px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =====================================
+           CONTAINER
+        ===================================== */
+
+        .container {
+
+            max-width: 750px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* =====================================
+           BACK BUTTON
+        ===================================== */
+
+        .back-link {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #b91c1c;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .back-link:hover {
+
+            color: #991b1b;
+        }
+
+
+        /* =====================================
+           BOOKING CARD
+        ===================================== */
+
+        .booking-card {
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 16px;
+
+            border: 1px solid #f1f5f9;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+
+
+        .booking-card h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+            color: #991b1b;
+
+            font-size: 28px;
+        }
+
+
+        .booking-description {
+
+            margin-top: 0;
+
+            margin-bottom: 28px;
+
+            color: #64748b;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================
+           SELECTED DEVICE
+        ===================================== */
+
+        .selected-item {
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #991b1b;
+
+            padding: 14px 16px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================
+           FORM
+        ===================================== */
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #1f2937;
+
+            font-size: 14px;
+        }
+
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 15px;
+
+            background: white;
+
+            color: #1f2937;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #b91c1c;
+
+            box-shadow:
+                0 0 0 3px rgba(185, 28, 28, 0.10);
+        }
+
+
+        textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+
+        /* =====================================
+           ERRORS
+        ===================================== */
+
+        .errorlist {
+
+            margin: 7px 0 0;
+
+            padding-left: 20px;
+
+            color: #dc2626;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================
+           NON FIELD ERROR
+        ===================================== */
+
+        .form-errors {
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #991b1b;
+
+            padding: 12px 15px;
+
+            border-radius: 9px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =====================================
+           SUBMIT BUTTON
+        ===================================== */
+
+        .submit-button {
+
+            width: 100%;
+
+            padding: 13px 18px;
+
+            margin-top: 8px;
+
+            background: linear-gradient(
+                135deg,
+                #b91c1c,
+                #991b1b
+            );
+
+            color: white;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 5px 12px rgba(153, 27, 27, 0.20);
+        }
+
+
+        .submit-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 18px rgba(153, 27, 27, 0.25);
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                padding: 15px 20px;
+            }
+
+
+            .container {
+
+                margin: 25px auto;
+            }
+
+
+            .booking-card {
+
+                padding: 25px 20px;
+            }
+
+
+            .booking-card h2 {
+
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header>
+
+    <div class="header-content">
+
+        <div class="logo">
+            FS
+        </div>
+
+        <div class="header-text">
+
+            <h1>
+                Faculty Science Booking
+            </h1>
+
+            <p>
+                Faculty of Science and Technology
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
+
+<div class="container">
+
+
+    <!-- Back -->
+
+    {% if device %}
+
+        <a
+            href="{% url 'device_list' %}"
+            class="back-link"
+        >
+            ← Back to Devices
+        </a>
+
+    {% else %}
+
+        <a
+            href="{% url 'room_list' %}"
+            class="back-link"
+        >
+            ← Back to Rooms
+        </a>
+
+    {% endif %}
+
+
+
+    <!-- Booking Card -->
+
+    <div class="booking-card">
+
+
+        {% if device %}
+
+            <h2>
+                Book a Device
+            </h2>
+
+            <p class="booking-description">
+                Reserve a device for your activity or class.
+            </p>
+
+
+            <div class="selected-item">
+
+                Device:
+                {{ device.device_name }}
+
+            </div>
+
+        {% else %}
+
+            <h2>
+                Book a Room
+            </h2>
+
+            <p class="booking-description">
+                Reserve a classroom for your class or activity.
+            </p>
+
+        {% endif %}
+
+
+
+        <!-- Form -->
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            {% if form.non_field_errors %}
+
+                <div class="form-errors">
+
+                    {{ form.non_field_errors }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- Room -->
+
+            {% if not device %}
+
+                <div class="form-group">
+
+                    <label
+                        for="{{ form.room.id_for_label }}"
+                    >
+                        Room
+                    </label>
+
+                    {{ form.room }}
+
+                    {{ form.room.errors }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- Device -->
+
+            {% if device %}
+
+                <div class="form-group">
+
+                    <label
+                        for="{{ form.device.id_for_label }}"
+                    >
+                        Device
+                    </label>
+
+                    {{ form.device }}
+
+                    {{ form.device.errors }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- Date -->
+
+            <div class="form-group">
+
+                <label
+                    for="{{ form.booking_date.id_for_label }}"
+                >
+                    Booking Date
+                </label>
+
+                {{ form.booking_date }}
+
+                {{ form.booking_date.errors }}
+
+            </div>
+
+
+
+            <!-- Start Time -->
+
+            <div class="form-group">
+
+                <label
+                    for="{{ form.start_time.id_for_label }}"
+                >
+                    Start Time
+                </label>
+
+                {{ form.start_time }}
+
+                {{ form.start_time.errors }}
+
+            </div>
+
+
+
+            <!-- End Time -->
+
+            <div class="form-group">
+
+                <label
+                    for="{{ form.end_time.id_for_label }}"
+                >
+                    End Time
+                </label>
+
+                {{ form.end_time }}
+
+                {{ form.end_time.errors }}
+
+            </div>
+
+
+
+            <!-- Purpose -->
+
+            <div class="form-group">
+
+                <label
+                    for="{{ form.purpose.id_for_label }}"
+                >
+                    Purpose
+                </label>
+
+                {{ form.purpose }}
+
+                {{ form.purpose.errors }}
+
+            </div>
+
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+                Confirm Booking
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

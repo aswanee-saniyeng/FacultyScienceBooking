@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Available Devices</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    <style>
+
+        /* =====================================
+           DEVICES PAGE
+        ===================================== */
+
+        body {
+            background: #f8fafc;
+        }
+
+
+        /* Header */
+
+        .devices-header {
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #b91c1c
+            );
+
+            color: white;
+
+            padding: 18px 40px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .devices-header-content {
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .devices-logo {
+            width: 45px;
+            height: 45px;
+
+            background: white;
+
+            color: #b91c1c;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+
+            font-size: 20px;
+        }
+
+        .devices-header h1 {
+            margin: 0;
+
+            font-size: 24px;
+        }
+
+        .devices-header p {
+            margin: 2px 0 0;
+
+            font-size: 12px;
+
+            opacity: 0.85;
+        }
+
+
+        /* Main */
+
+        .devices-container {
+
+            max-width: 1100px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* Back */
+
+        .devices-back {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #b91c1c;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .devices-back:hover {
+
+            color: #991b1b;
+        }
+
+
+        /* Page Heading */
+
+        .page-heading {
+
+            margin-bottom: 30px;
+        }
+
+        .page-heading h2 {
+
+            margin: 0;
+
+            color: #1f2937;
+
+            font-size: 30px;
+        }
+
+        .page-heading p {
+
+            margin-top: 7px;
+
+            color: #64748b;
+
+            font-size: 15px;
+        }
+
+
+        /* Device Grid */
+
+        .device-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(290px, 360px)
+                );
+
+            gap: 22px;
+
+            justify-content: start;
+        }
+
+
+        /* Device Card */
+
+        .device-card {
+
+            background: white;
+
+            width: 100%;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            border: 1px solid #f1f5f9;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+
+            transition: 0.25s;
+        }
+
+        .device-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.10);
+        }
+
+
+        /* Device Icon */
+
+        .device-icon {
+
+            width: 55px;
+            height: 55px;
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* Device Name */
+
+        .device-card h2 {
+
+            margin: 0 0 18px;
+
+            color: #991b1b;
+
+            font-size: 21px;
+        }
+
+
+        /* Device Information */
+
+        .device-info {
+
+            margin-bottom: 8px;
+
+            color: #475569;
+
+            font-size: 14px;
+        }
+
+        .device-info strong {
+
+            color: #1f2937;
+        }
+
+
+        /* Status */
+
+        .status-badge {
+
+            display: inline-block;
+
+            padding: 5px 11px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-top: 5px;
+        }
+
+        .available {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .unavailable {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+
+        /* Booking Button */
+
+        .book-button {
+
+            display: block;
+
+            margin-top: 20px;
+
+            padding: 11px 16px;
+
+            background: #b91c1c;
+
+            color: white;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .book-button:hover {
+
+            background: #991b1b;
+
+            color: white;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* Empty */
+
+        .empty {
+
+            background: white;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty h2 {
+
+            margin-top: 0;
+
+            color: #991b1b;
+        }
+
+        .empty p {
+
+            color: #64748b;
+        }
+
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+
+            .devices-header {
+
+                padding: 15px 20px;
+            }
+
+            .devices-container {
+
+                margin: 25px auto;
+            }
+
+            .page-heading h2 {
+
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="devices-header">
+
+    <div class="devices-header-content">
+
+        <div class="devices-logo">
+            FS
+        </div>
+
+        <div>
+
+            <h1>
+                Available Devices
+            </h1>
+
+            <p>
+                Faculty of Science and Technology
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
+
+<div class="devices-container">
+
+
+    <a href="{% url 'home' %}"
+       class="devices-back">
+
+        ← Back to Home
+
+    </a>
+
+
+    <div class="page-heading">
+
+        <h2>
+            Available Devices
+        </h2>
+
+        <p>
+            Check device availability and make a booking.
+        </p>
+
+    </div>
+
+
+
+    {% if devices %}
+
+
+        <div class="device-grid">
+
+
+            {% for device in devices %}
+
+
+                <div class="device-card">
+
+
+                    <div class="device-icon">
+                        D
+                    </div>
+
+
+                    <h2>
+                        {{ device.device_name }}
+                    </h2>
+
+
+                    <p class="device-info">
+
+                        <strong>
+                            Type:
+                        </strong>
+
+                        {{ device.device_type }}
+
+                    </p>
+
+
+                    <p class="device-info">
+
+                        <strong>
+                            Quantity:
+                        </strong>
+
+                        {{ device.quantity }}
+
+                    </p>
+
+
+                    <p class="device-info">
+
+                        <strong>
+                            Description:
+                        </strong>
+
+                        {{ device.description|default:"-" }}
+
+                    </p>
+
+
+                    <p class="device-info">
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+                        {% if device.status == "available" %}
+
+                            <span class="status-badge available">
+
+                                Available
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge unavailable">
+
+                                Unavailable
+
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    {% if device.status == "available" %}
+
+                        <a
+                            href="{% url 'book_device' device.id %}"
+                            class="book-button"
+                        >
+
+                            Book This Device
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <h2>
+                No Devices Available
+            </h2>
+
+            <p>
+                There are currently no devices in the system.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

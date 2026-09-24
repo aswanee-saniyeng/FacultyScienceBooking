@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Science Booking System</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+
+        /* =====================================
+           HOME PAGE
+        ===================================== */
+
+        body {
+            background: #f8fafc;
+        }
+
+        /* Header */
+
+        .home-header {
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #b91c1c
+            );
+
+            color: white;
+            padding: 18px 50px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+
+            background: white;
+            color: #b91c1c;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .brand-text h1 {
+            margin: 0;
+
+            font-size: 21px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0;
+
+            font-size: 12px;
+
+            opacity: 0.85;
+        }
+
+        /* Navigation */
+
+        .home-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-nav a {
+            color: white;
+            text-decoration: none;
+
+            padding: 9px 13px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .home-nav a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .user-info {
+            font-size: 14px;
+
+            padding-right: 8px;
+        }
+
+        /* Hero */
+
+        .hero {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 75px 20px 70px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff7f7,
+                    #ffffff
+                );
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            background: #fee2e2;
+
+            border-radius: 50%;
+
+            top: -150px;
+            left: -100px;
+
+            opacity: 0.6;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            background: #fecaca;
+
+            border-radius: 50%;
+
+            bottom: -130px;
+            right: -80px;
+
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            position: relative;
+
+            max-width: 850px;
+
+            margin: auto;
+
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 18px;
+        }
+
+        .hero h2 {
+            margin: 0;
+
+            font-size: 42px;
+
+            color: #991b1b;
+
+            line-height: 1.2;
+        }
+
+        .hero h2 span {
+            color: #b91c1c;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            margin: 20px auto 0;
+
+            font-size: 17px;
+
+            color: #64748b;
+        }
+
+        /* Buttons */
+
+        .hero-buttons {
+            margin-top: 32px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .home-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .home-btn-primary {
+            background: #b91c1c;
+
+            color: white;
+
+            box-shadow:
+                0 4px 10px rgba(185, 28, 28, 0.25);
+        }
+
+        .home-btn-primary:hover {
+            background: #991b1b;
+
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+        .home-btn-secondary {
+            background: white;
+
+            color: #b91c1c;
+
+            border: 1px solid #fecaca;
+        }
+
+        .home-btn-secondary:hover {
+            background: #fef2f2;
+
+            color: #991b1b;
+        }
+
+        /* Features */
+
+        .features-section {
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 55px 20px 70px;
+        }
+
+        .section-heading {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+
+            color: #1f2937;
+
+            font-size: 27px;
+        }
+
+        .section-heading p {
+            margin-top: 7px;
+
+            color: #64748b;
+        }
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 22px;
+        }
+
+        .feature-card {
+            background: white;
+
+            padding: 28px 25px;
+
+            border-radius: 14px;
+
+            border: 1px solid #f1f5f9;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.06);
+
+            transition: 0.25s;
+
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.10);
+        }
+
+        .feature-icon {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+            font-size: 25px;
+
+            font-weight: bold;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 8px;
+
+            color: #991b1b;
+
+            font-size: 19px;
+        }
+
+        .feature-card p {
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        /* Footer */
+
+        .home-footer {
+            background: #1f2937;
+
+            color: #cbd5e1;
+
+            text-align: center;
+
+            padding: 22px 20px;
+
+            font-size: 13px;
+        }
+
+        .home-footer strong {
+            color: white;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 800px) {
+
+            .home-header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .home-nav {
+                width: 100%;
+
+                flex-wrap: wrap;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero {
+                padding: 55px 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="home-header">
+
+    <div class="header-content">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                FS
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    Faculty Science Booking
+                </h1>
+
+                <p>
+                    Faculty of Science and Technology
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="home-nav">
+
+            {% if user.is_authenticated %}
+
+                <span class="user-info">
+                    Welcome, {{ user.username }}
+                    ({{ user.get_role_display }})
+                </span>
+
+                <a href="{% url 'room_list' %}">
+                    Rooms
+                </a>
+
+                <a href="{% url 'device_list' %}">
+                    Devices
+                </a>
+
+                <a href="{% url 'my_bookings' %}">
+                    My Bookings
+                </a>
+
+                <a href="{% url 'booking_report' %}">
+                    Report
+                </a>
+
+                <a href="/admin/">
+                    Admin
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================
+     HERO
+===================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            FACULTY OF SCIENCE AND TECHNOLOGY
+        </div>
+
+        <h2>
+            Faculty Science
+            <span>Booking System</span>
+        </h2>
+
+        <p>
+            A convenient online system for booking
+            classrooms and devices within the Faculty
+            of Science and Technology.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            {% if user.is_authenticated %}
+
+                <a
+                    href="{% url 'room_list' %}"
+                    class="home-btn home-btn-primary"
+                >
+                    Book a Room
+                </a>
+
+                <a
+                    href="{% url 'device_list' %}"
+                    class="home-btn home-btn-secondary"
+                >
+                    Book a Device
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="home-btn home-btn-primary"
+                >
+                    Login to Book
+                </a>
+
+                <a
+                    href="{% url 'register' %}"
+                    class="home-btn home-btn-secondary"
+                >
+                    Create Account
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================
+     FEATURES
+===================================== -->
+
+<section class="features-section">
+
+    <div class="section-heading">
+
+        <h2>
+            System Features
+        </h2>
+
+        <p>
+            Manage your classroom and device bookings easily.
+        </p>
+
+    </div>
+
+
+    <div class="features">
+
+
+        <!-- Rooms -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                R
+            </div>
+
+            <h3>
+                Classrooms
+            </h3>
+
+            <p>
+                Check available classrooms
+                and make a booking online.
+            </p>
+
+        </div>
+
+
+        <!-- Devices -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                D
+            </div>
+
+            <h3>
+                Devices
+            </h3>
+
+            <p>
+                Check and reserve available
+                devices for your activities.
+            </p>
+
+        </div>
+
+
+        <!-- My Bookings -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                B
+            </div>
+
+            <h3>
+                My Bookings
+            </h3>
+
+            <p>
+                View your booking history
+                and booking status.
+            </p>
+
+        </div>
+
+
+        <!-- Report -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                RP
+            </div>
+
+            <h3>
+                Booking Report
+            </h3>
+
+            <p>
+                View booking records
+                and filter booking information.
+            </p>
+
+        </div>
+
+
+        <!-- Chatbot -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                AI
+            </div>
+
+            <h3>
+                AI Chatbot
+            </h3>
+
+            <p>
+                Get help with room availability,
+                booking procedures and status.
+            </p>
+
+        </div>
+
+
+        <!-- Admin -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                A
+            </div>
+
+            <h3>
+                Administration
+            </h3>
+
+            <p>
+                Manage rooms, devices, users
+                and booking requests.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer class="home-footer">
+
+    <strong>
+        Faculty Science Booking System
+    </strong>
+
+    <br>
+
+    Faculty of Science and Technology
+
+</footer>
+
+
+</body>
+</html>

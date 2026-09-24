@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Report</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #2563eb;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+        /* Summary */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+
+        .summary-card .number {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Filter */
+
+        .filter-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .filter-card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-form label {
+            font-weight: bold;
+        }
+
+        .filter-form select,
+        .filter-form input {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .filter-button {
+            padding: 10px 16px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .filter-button:hover {
+            background: #1d4ed8;
+        }
+
+        .clear-button {
+            padding: 10px 16px;
+            background: #6b7280;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .clear-button:hover {
+            background: #4b5563;
+        }
+
+        /* Report Table */
+
+        .report-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        .report-card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #d97706;
+        }
+
+        .approved {
+            color: green;
+        }
+
+        .rejected {
+            color: red;
+        }
+
+        .cancelled {
+            color: #6b7280;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .filter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-form select,
+            .filter-form input,
+            .filter-button,
+            .clear-button {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            table {
+                min-width: 900px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Booking Report</h1>
+</header>
+
+<div class="container">
+
+    <a href="{% url 'home' %}" class="back-link">
+        ← Back to Home
+    </a>
+
+
+    <!-- Summary -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <h3>Total Bookings</h3>
+            <p class="number">{{ summary.total }}</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Pending</h3>
+            <p class="number pending">
+                {{ summary.pending }}
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Approved</h3>
+            <p class="number approved">
+                {{ summary.approved }}
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Rejected</h3>
+            <p class="number rejected">
+                {{ summary.rejected }}
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Cancelled</h3>
+            <p class="number cancelled">
+                {{ summary.cancelled }}
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- Filter -->
+
+    <div class="filter-card">
+
+        <h2>Filter Bookings</h2>
+
+        <form method="get" class="filter-form">
+
+            <label for="status">
+                Status:
+            </label>
+
+            <select name="status" id="status">
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option value="pending"
+                    {% if selected_status == 'pending' %}selected{% endif %}>
+                    Pending
+                </option>
+
+                <option value="approved"
+                    {% if selected_status == 'approved' %}selected{% endif %}>
+                    Approved
+                </option>
+
+                <option value="rejected"
+                    {% if selected_status == 'rejected' %}selected{% endif %}>
+                    Rejected
+                </option>
+
+                <option value="cancelled"
+                    {% if selected_status == 'cancelled' %}selected{% endif %}>
+                    Cancelled
+                </option>
+
+            </select>
+
+
+            <label for="booking_date">
+                Booking Date:
+            </label>
+
+            <input
+                type="date"
+                name="booking_date"
+                id="booking_date"
+                value="{{ selected_date }}"
+            >
+
+
+            <button type="submit" class="filter-button">
+                Filter
+            </button>
+
+
+            <a href="{% url 'booking_report' %}"
+               class="clear-button">
+                Clear
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- Report Table -->
+
+    <div class="report-card">
+
+        <h2>Booking Records</h2>
+
+        {% if bookings %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>User</th>
+                    <th>Room</th>
+                    <th>Device</th>
+                    <th>Date</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for booking in bookings %}
+
+                <tr>
+
+                    <td>
+                        {{ booking.user.username }}
+                    </td>
+
+                    <td>
+                        {% if booking.room %}
+                            {{ booking.room.room_name }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if booking.device %}
+                            {{ booking.device.device_name }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ booking.booking_date }}
+                    </td>
+
+                    <td>
+                        {{ booking.start_time }}
+                    </td>
+
+                    <td>
+                        {{ booking.end_time }}
+                    </td>
+
+                    <td>
+                        {{ booking.purpose }}
+                    </td>
+
+                    <td class="status {{ booking.status }}">
+                        {{ booking.get_status_display }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div class="empty">
+
+            <h2>No bookings found</h2>
+
+            <p>
+                There are no bookings matching the selected filters.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
