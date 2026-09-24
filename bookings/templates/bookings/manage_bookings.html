@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Bookings - Faculty Science Booking System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #1f2937;
+        }
+
+        header {
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #dc2626
+            );
+
+            color: white;
+            padding: 20px 50px;
+        }
+
+        header h1 {
+            margin: 0;
+            color: white;
+            font-size: 24px;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            color: #991b1b;
+            font-size: 30px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th {
+            background: #991b1b;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #fef2f2;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .cancelled {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Faculty Science Booking System</h1>
+
+    <p>Admin Management - Bookings</p>
+
+</header>
+
+
+<div class="container">
+
+    <div class="page-title">
+
+        <h2>Manage Bookings</h2>
+
+        <p>
+            View and manage all booking requests.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        {% if bookings %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>User</th>
+
+                    <th>Room</th>
+
+                    <th>Device</th>
+
+                    <th>Date</th>
+
+                    <th>Start</th>
+
+                    <th>End</th>
+
+                    <th>Purpose</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for booking in bookings %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ booking.user.username }}
+                        </strong>
+                    </td>
+
+
+                    <td>
+
+                        {% if booking.room %}
+
+                            {{ booking.room.room_name }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if booking.device %}
+
+                            {{ booking.device.device_name }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        {{ booking.booking_date }}
+                    </td>
+
+
+                    <td>
+                        {{ booking.start_time }}
+                    </td>
+
+
+                    <td>
+                        {{ booking.end_time }}
+                    </td>
+
+
+                    <td>
+                        {{ booking.purpose }}
+                    </td>
+
+
+                    <td>
+
+                        {% if booking.status == 'pending' %}
+
+                            <span class="status pending">
+                                Pending
+                            </span>
+
+                        {% elif booking.status == 'approved' %}
+
+                            <span class="status approved">
+                                Approved
+                            </span>
+
+                        {% elif booking.status == 'rejected' %}
+
+                            <span class="status rejected">
+                                Rejected
+                            </span>
+
+                        {% else %}
+
+                            <span class="status cancelled">
+                                Cancelled
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+    {% if booking.status == 'pending' %}
+
+        <form method="POST"
+              action="{% url 'approve_booking' booking.id %}"
+              style="display: inline;">
+
+            {% csrf_token %}
+
+            <button type="submit"
+                    style="
+                        background: #16a34a;
+                        color: white;
+                        border: none;
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        font-size: 13px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin-right: 5px;
+                    ">
+                Approve
+            </button>
+
+        </form>
+
+
+        <form method="POST"
+              action="{% url 'reject_booking' booking.id %}"
+              style="display: inline;">
+
+            {% csrf_token %}
+
+            <button type="submit"
+                    style="
+                        background: #dc2626;
+                        color: white;
+                        border: none;
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        font-size: 13px;
+                        font-weight: bold;
+                        cursor: pointer;
+                    ">
+                Reject
+            </button>
+
+        </form>
+
+    {% else %}
+
+        <span style="color: #94a3b8;">
+            No actions
+        </span>
+
+    {% endif %}
+
+</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div class="empty">
+
+            No bookings found.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <a href="{% url 'home' %}" class="back">
+        ← Back to Home
+    </a>
+
+</div>
+
+</body>
+
+</html>
