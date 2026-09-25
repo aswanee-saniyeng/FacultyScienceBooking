@@ -1,164 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Booking Report</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
-            padding: 0;
+
+        * {
+            box-sizing: border-box;
         }
 
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
         header {
-            background: #2563eb;
+            background: linear-gradient(
+                135deg,
+                #991b1b,
+                #dc2626
+            );
+
             color: white;
-            padding: 20px 40px;
+
+            padding: 25px 40px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.12);
         }
 
         header h1 {
             margin: 0;
+
+            font-size: 28px;
         }
 
+
+        /* =====================================
+           CONTAINER
+        ===================================== */
+
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
+
             margin: 40px auto;
+
             padding: 0 20px;
+        }
+
+
+        /* =====================================
+           NAVIGATION BUTTONS
+        ===================================== */
+
+        .navigation {
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+
+            flex-wrap: wrap;
         }
 
         .back-link {
             display: inline-block;
-            margin-bottom: 20px;
+
+            padding: 10px 16px;
+
+            background: #64748b;
+
+            color: white;
+
             text-decoration: none;
-            color: #2563eb;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
         }
 
-        /* Summary */
+        .back-link:hover {
+            background: #475569;
+
+            color: white;
+        }
+
+        .manage-link {
+            display: inline-block;
+
+            padding: 10px 16px;
+
+            background: #991b1b;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .manage-link:hover {
+            background: #7f1d1d;
+
+            color: white;
+        }
+
+
+        /* =====================================
+           SUMMARY
+        ===================================== */
 
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(170px, 1fr)
+                );
+
             gap: 15px;
+
             margin-bottom: 25px;
         }
 
         .summary-card {
             background: white;
+
             padding: 20px;
+
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+
             text-align: center;
+
+            border: 1px solid #f1f5f9;
         }
 
         .summary-card h3 {
             margin: 0 0 10px 0;
+
             font-size: 16px;
+
+            color: #475569;
         }
 
         .summary-card .number {
             font-size: 28px;
+
             font-weight: bold;
+
             margin: 0;
+
+            color: #991b1b;
         }
 
-        /* Filter */
+        .summary-card:first-child .number {
+            color: #991b1b;
+        }
+
+
+        /* =====================================
+           FILTER
+        ===================================== */
 
         .filter-card {
             background: white;
+
             padding: 25px;
+
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+
             margin-bottom: 25px;
         }
 
         .filter-card h2 {
             margin-top: 0;
+
             margin-bottom: 20px;
+
+            color: #991b1b;
         }
 
         .filter-form {
             display: flex;
+
             flex-wrap: wrap;
+
             align-items: center;
+
             gap: 12px;
         }
 
         .filter-form label {
             font-weight: bold;
+
+            color: #334155;
         }
 
         .filter-form select,
         .filter-form input {
             padding: 10px;
+
             border: 1px solid #d1d5db;
+
             border-radius: 6px;
+
             font-size: 14px;
+
+            background: white;
         }
+
+        .filter-form select:focus,
+        .filter-form input:focus {
+            outline: none;
+
+            border-color: #b91c1c;
+
+            box-shadow:
+                0 0 0 2px rgba(185, 28, 28, 0.10);
+        }
+
+
+        /* Filter Button */
 
         .filter-button {
             padding: 10px 16px;
-            background: #2563eb;
+
+            background: #b91c1c;
+
             color: white;
+
             border: none;
+
             border-radius: 6px;
+
             cursor: pointer;
+
+            font-weight: bold;
         }
 
         .filter-button:hover {
-            background: #1d4ed8;
+            background: #991b1b;
         }
+
+
+        /* Clear Button */
 
         .clear-button {
             padding: 10px 16px;
-            background: #6b7280;
+
+            background: #64748b;
+
             color: white;
+
             text-decoration: none;
+
             border-radius: 6px;
+
+            font-weight: bold;
         }
 
         .clear-button:hover {
-            background: #4b5563;
+            background: #475569;
+
+            color: white;
         }
 
-        /* Report Table */
+
+        /* =====================================
+           REPORT TABLE
+        ===================================== */
 
         .report-card {
             background: white;
+
             padding: 25px;
+
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+
             overflow-x: auto;
         }
 
         .report-card h2 {
             margin-top: 0;
+
             margin-bottom: 20px;
+
+            color: #991b1b;
         }
 
         table {
             width: 100%;
+
             border-collapse: collapse;
         }
 
         th {
-            background: #2563eb;
+            background: #991b1b;
+
             color: white;
+
             padding: 12px;
+
             text-align: left;
         }
 
         td {
             padding: 12px;
+
             border-bottom: 1px solid #e5e7eb;
         }
 
         tr:hover {
-            background: #f9fafb;
+            background: #fef2f2;
         }
+
+
+        /* =====================================
+           STATUS
+        ===================================== */
 
         .status {
             font-weight: bold;
@@ -169,25 +359,44 @@
         }
 
         .approved {
-            color: green;
+            color: #166534;
         }
 
         .rejected {
-            color: red;
+            color: #dc2626;
         }
 
         .cancelled {
-            color: #6b7280;
+            color: #64748b;
         }
+
+
+        /* =====================================
+           EMPTY
+        ===================================== */
 
         .empty {
             background: white;
+
             padding: 30px;
+
             text-align: center;
+
             border-radius: 12px;
         }
 
-        /* Responsive */
+        .empty h2 {
+            color: #991b1b;
+        }
+
+        .empty p {
+            color: #64748b;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
 
         @media (max-width: 700px) {
 
@@ -195,8 +404,13 @@
                 margin: 25px auto;
             }
 
+            header {
+                padding: 20px;
+            }
+
             .filter-form {
                 flex-direction: column;
+
                 align-items: stretch;
             }
 
@@ -205,113 +419,222 @@
             .filter-button,
             .clear-button {
                 width: 100%;
+
                 box-sizing: border-box;
+            }
+
+            .navigation {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .back-link,
+            .manage-link {
+                text-align: center;
             }
 
             table {
                 min-width: 900px;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
 <header>
-    <h1>Booking Report</h1>
+
+    <h1>
+        Booking Report
+    </h1>
+
 </header>
+
+
+
+<!-- =====================================
+     MAIN
+===================================== -->
 
 <div class="container">
 
-    <a href="{% url 'home' %}" class="back-link">
-        ← Back to Home
-    </a>
+
+    <!-- Navigation -->
+
+    <div class="navigation">
+
+        <a href="{% url 'home' %}"
+           class="back-link">
+
+            ← Back to Home
+
+        </a>
 
 
-    <!-- Summary -->
+        <a href="{% url 'manage_bookings' %}"
+           class="manage-link">
 
-    <div class="summary-grid">
+            ⚙ Manage Bookings
 
-        <div class="summary-card">
-            <h3>Total Bookings</h3>
-            <p class="number">{{ summary.total }}</p>
-        </div>
-
-        <div class="summary-card">
-            <h3>Pending</h3>
-            <p class="number pending">
-                {{ summary.pending }}
-            </p>
-        </div>
-
-        <div class="summary-card">
-            <h3>Approved</h3>
-            <p class="number approved">
-                {{ summary.approved }}
-            </p>
-        </div>
-
-        <div class="summary-card">
-            <h3>Rejected</h3>
-            <p class="number rejected">
-                {{ summary.rejected }}
-            </p>
-        </div>
-
-        <div class="summary-card">
-            <h3>Cancelled</h3>
-            <p class="number cancelled">
-                {{ summary.cancelled }}
-            </p>
-        </div>
+        </a>
 
     </div>
 
 
-    <!-- Filter -->
+
+    <!-- =====================================
+         SUMMARY
+    ===================================== -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <h3>
+                Total Bookings
+            </h3>
+
+            <p class="number">
+                {{ summary.total }}
+            </p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>
+                Pending
+            </h3>
+
+            <p class="number pending">
+                {{ summary.pending }}
+            </p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>
+                Approved
+            </h3>
+
+            <p class="number approved">
+                {{ summary.approved }}
+            </p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>
+                Rejected
+            </h3>
+
+            <p class="number rejected">
+                {{ summary.rejected }}
+            </p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>
+                Cancelled
+            </h3>
+
+            <p class="number cancelled">
+                {{ summary.cancelled }}
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         FILTER
+    ===================================== -->
 
     <div class="filter-card">
 
-        <h2>Filter Bookings</h2>
+        <h2>
+            Filter Bookings
+        </h2>
 
-        <form method="get" class="filter-form">
+
+        <form method="get"
+              class="filter-form">
+
 
             <label for="status">
+
                 Status:
+
             </label>
 
-            <select name="status" id="status">
+
+            <select name="status"
+                    id="status">
 
                 <option value="">
                     All Status
                 </option>
 
                 <option value="pending"
-                    {% if selected_status == 'pending' %}selected{% endif %}>
+                    {% if selected_status == 'pending' %}
+                        selected
+                    {% endif %}>
                     Pending
                 </option>
 
                 <option value="approved"
-                    {% if selected_status == 'approved' %}selected{% endif %}>
+                    {% if selected_status == 'approved' %}
+                        selected
+                    {% endif %}>
                     Approved
                 </option>
 
                 <option value="rejected"
-                    {% if selected_status == 'rejected' %}selected{% endif %}>
+                    {% if selected_status == 'rejected' %}
+                        selected
+                    {% endif %}>
                     Rejected
                 </option>
 
                 <option value="cancelled"
-                    {% if selected_status == 'cancelled' %}selected{% endif %}>
+                    {% if selected_status == 'cancelled' %}
+                        selected
+                    {% endif %}>
                     Cancelled
                 </option>
 
             </select>
 
 
+
             <label for="booking_date">
+
                 Booking Date:
+
             </label>
+
 
             <input
                 type="date"
@@ -321,105 +644,177 @@
             >
 
 
-            <button type="submit" class="filter-button">
+
+            <button type="submit"
+                    class="filter-button">
+
                 Filter
+
             </button>
+
 
 
             <a href="{% url 'booking_report' %}"
                class="clear-button">
+
                 Clear
+
             </a>
+
 
         </form>
 
     </div>
 
 
-    <!-- Report Table -->
+
+    <!-- =====================================
+         REPORT TABLE
+    ===================================== -->
 
     <div class="report-card">
 
-        <h2>Booking Records</h2>
+        <h2>
+            Booking Records
+        </h2>
+
 
         {% if bookings %}
+
 
         <table>
 
             <thead>
 
                 <tr>
-                    <th>User</th>
-                    <th>Room</th>
-                    <th>Device</th>
-                    <th>Date</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Purpose</th>
-                    <th>Status</th>
+
+                    <th>
+                        User
+                    </th>
+
+                    <th>
+                        Room
+                    </th>
+
+                    <th>
+                        Device
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Start
+                    </th>
+
+                    <th>
+                        End
+                    </th>
+
+                    <th>
+                        Purpose
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
                 </tr>
 
             </thead>
 
+
             <tbody>
+
 
                 {% for booking in bookings %}
 
+
                 <tr>
+
 
                     <td>
                         {{ booking.user.username }}
                     </td>
 
-                    <td>
-                        {% if booking.room %}
-                            {{ booking.room.room_name }}
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
 
                     <td>
-                        {% if booking.device %}
-                            {{ booking.device.device_name }}
+
+                        {% if booking.room %}
+
+                            {{ booking.room.room_name }}
+
                         {% else %}
+
                             -
+
                         {% endif %}
+
                     </td>
+
+
+                    <td>
+
+                        {% if booking.device %}
+
+                            {{ booking.device.device_name }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
 
                     <td>
                         {{ booking.booking_date }}
                     </td>
 
+
                     <td>
                         {{ booking.start_time }}
                     </td>
+
 
                     <td>
                         {{ booking.end_time }}
                     </td>
 
+
                     <td>
                         {{ booking.purpose }}
                     </td>
 
+
                     <td class="status {{ booking.status }}">
+
                         {{ booking.get_status_display }}
+
                     </td>
+
 
                 </tr>
 
+
                 {% endfor %}
+
 
             </tbody>
 
         </table>
 
+
         {% else %}
+
 
         <div class="empty">
 
-            <h2>No bookings found</h2>
+            <h2>
+                No bookings found
+            </h2>
 
             <p>
                 There are no bookings matching the selected filters.
@@ -427,11 +822,16 @@
 
         </div>
 
+
         {% endif %}
+
 
     </div>
 
+
 </div>
 
+
 </body>
+
 </html>

@@ -167,3 +167,44 @@ def booking_report(request):
             'summary': summary,
         }
     )
+
+@login_required
+def manage_bookings(request):
+
+    # Only Admin can access this page
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    bookings = Booking.objects.all().select_related(
+        'user',
+        'room',
+        'device'
+    ).order_by(
+        '-booking_date',
+        '-start_time'
+    )
+
+    return render(
+        request,
+        'bookings/manage_bookings.html',
+        {
+            'bookings': bookings,
+        }
+    )
+
+@login_required
+def update_booking_status(request, booking_id, status):
+
+    # Only Admin can update booking status
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    booking = Booking.objects.get(id=booking_id)
+
+    if request.method == 'POST':
+
+        if status in ['approved', 'rejected']:
+            booking.status = status
+            booking.save()
+
+    return redirect('manage_bookings')

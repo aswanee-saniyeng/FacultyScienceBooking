@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Device</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        header {
+            background: linear-gradient(135deg, #991b1b, #dc2626);
+            color: white;
+            padding: 25px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #991b1b;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #dc2626;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .save-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #991b1b;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #334155;
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .cancel-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .errorlist {
+            color: #dc2626;
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Faculty Science Booking System</h1>
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>Add Device</h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <div class="buttons">
+
+                    <button type="submit" class="save-btn">
+                        Add Device
+                    </button>
+
+                    <a href="{% url 'manage_devices' %}" class="cancel-btn">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

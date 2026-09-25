@@ -102,24 +102,75 @@
         }
 
 
-        /* Back */
+        /* Top Navigation */
+
+        .devices-navigation {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* Back to Home */
 
         .devices-back {
 
             display: inline-block;
 
-            margin-bottom: 20px;
+            padding: 10px 16px;
 
-            color: #b91c1c;
+            background: #64748b;
+
+            color: white;
 
             text-decoration: none;
 
+            border-radius: 8px;
+
             font-weight: bold;
+
+            transition: 0.2s;
         }
 
         .devices-back:hover {
 
-            color: #991b1b;
+            background: #475569;
+
+            color: white;
+        }
+
+
+        /* Manage Devices */
+
+        .manage-devices-btn {
+
+            display: inline-block;
+
+            padding: 10px 16px;
+
+            background: #991b1b;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .manage-devices-btn:hover {
+
+            background: #7f1d1d;
+
+            color: white;
         }
 
 
@@ -366,6 +417,19 @@
                 font-size: 25px;
             }
 
+            .devices-navigation {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .devices-back,
+            .manage-devices-btn {
+
+                text-align: center;
+            }
+
         }
 
     </style>
@@ -413,12 +477,27 @@
 <div class="devices-container">
 
 
-    <a href="{% url 'home' %}"
-       class="devices-back">
+    <!-- Navigation Buttons -->
 
-        ← Back to Home
+    <div class="devices-navigation">
 
-    </a>
+        <a href="{% url 'home' %}"
+           class="devices-back">
+
+            ← Back to Home
+
+        </a>
+
+
+        <a href="{% url 'manage_devices' %}"
+           class="manage-devices-btn">
+
+            ⚙ Manage Devices
+
+        </a>
+
+    </div>
+
 
 
     <div class="page-heading">
