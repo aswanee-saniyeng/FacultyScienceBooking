@@ -1,4 +1,15 @@
-<table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h2>Manage Users</h2>
+    <table>
   <thead>
     <tr>
       <th>Username</th>
@@ -30,3 +41,5 @@
     {% endfor %}
   </tbody>
 </table>
+</body>
+</html>
