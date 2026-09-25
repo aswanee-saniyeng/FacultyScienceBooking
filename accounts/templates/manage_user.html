@@ -1,0 +1,32 @@
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u.username }}</td>
+      <td>{{ u.first_name }} {{ u.last_name }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.get_role_display }}</td>
+      <td>{% if u.is_active %}Active{% else %}Inactive{% endif %}</td>
+      <td>
+        <a href="{% url 'edit_user' u.id %}">Edit</a>
+        <form method="post" action="{% url 'toggle_user_active' u.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">
+            {% if u.is_active %}Deactivate{% else %}Activate{% endif %}
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
