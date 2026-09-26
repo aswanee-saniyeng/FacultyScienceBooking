@@ -21,7 +21,7 @@
         /* ================= HEADER ================= */
 
         .header {
-            background: linear-gradient(135deg, #991b1b, #dc2626);
+            background: linear-gradient(135deg, #7A1220, #A6192E);
             color: white;
             padding: 20px 50px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
@@ -39,7 +39,7 @@
             width: 54px;
             height: 54px;
             background: white;
-            color: #b91c1c;
+            color: #A6192E;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -113,7 +113,7 @@
             margin: 0 auto 20px;
             border-radius: 16px;
             background: #fef2f2;
-            color: #b91c1c;
+            color: #A6192E;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -123,7 +123,7 @@
 
         h2 {
             text-align: center;
-            color: #991b1b;
+            color: #7A1220;
             margin: 0;
             font-size: 30px;
         }
@@ -159,15 +159,15 @@
         }
 
         input:focus {
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.10);
+            border-color: #A6192E;
+            box-shadow: 0 0 0 3px rgba(166, 25, 46, 0.10);
         }
 
         button {
             width: 100%;
             padding: 13px;
             margin-top: 5px;
-            background: linear-gradient(135deg, #b91c1c, #dc2626);
+            background: linear-gradient(135deg, #A6192E, #A6192E);
             color: white;
             border: none;
             border-radius: 9px;
@@ -175,12 +175,12 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 5px 12px rgba(185, 28, 28, 0.20);
+            box-shadow: 0 5px 12px rgba(166, 25, 46, 0.20);
         }
 
         button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 7px 16px rgba(185, 28, 28, 0.28);
+            box-shadow: 0 7px 16px rgba(166, 25, 46, 0.28);
         }
 
         /* ================= ERROR ================= */
@@ -188,7 +188,7 @@
         .error {
             background: #fef2f2;
             border: 1px solid #fecaca;
-            color: #b91c1c;
+            color: #A6192E;
             padding: 12px 15px;
             border-radius: 8px;
             text-align: center;
@@ -208,7 +208,7 @@
         }
 
         .register a {
-            color: #b91c1c;
+            color: #A6192E;
             text-decoration: none;
             font-weight: bold;
         }
@@ -256,9 +256,10 @@
 
     <div class="header-content">
 
-        <div class="logo">
-            FS
-        </div>
+        {% load static %}
+<div class="logo">
+    <img src="{% static 'images/logo.jpeg' %}" alt="Fatoni University logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">
+</div>
 
         <div class="header-text">
 
@@ -290,7 +291,7 @@
     <div class="container">
 
         <div class="login-icon">
-            FS
+            <img src="{% static 'images/logo.jpeg' %}" alt="Fatoni University logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 16px;">
         </div>
 
         <h2>
