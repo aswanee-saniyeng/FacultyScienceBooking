@@ -138,3 +138,6 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+LINE_CHANNEL_ACCESS_TOKEN = '85t9kcsyfKaOhj5PX8GyRo/XmmYdNuTEaQ/e/7m4CdkEJWuMvJ4VGufcABpuAaoqR7yFXTnWnttghHbASjlZoniGuYfZjcQdwXFR5OW0ZkjWvdSqwSG+hdFYR70yAawr+1/x0wM6sQXICjUX6wOltQdB04t89/1O/w1cDnyilFU='
+LINE_ADMIN_USER_ID = 'ใส่ User ID ของ Admin ตรงนี้'

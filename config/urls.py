@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import home
 from django.urls import path, include
+from django.urls import path, include
 
 urlpatterns = [
     path('', home, name='home'),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('devices/', include('devices.urls')),
     path('bookings/', include('bookings.urls')),
     path('chatbot/', include('chatbot.urls')),
+    path('notifications/', include('notifications.urls')),
 ]
