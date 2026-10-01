@@ -53,6 +53,7 @@
             align-items: center;
             gap: 14px;
         }
+        
 
         .brand-icon {
             width: 45px;
@@ -118,110 +119,66 @@
 
         /* Hero */
 
-        .hero {
-            position: relative;
+    .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 480px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
 
-            overflow: hidden;
+    .hero-bg-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 35%;
+        z-index: 0;
+    }
 
-            padding: 75px 20px 70px;
+    .hero-content {
+        position: relative;
+        z-index: 1;
 
-            text-align: center;
+        max-width: 700px;
+        margin: 0 20px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #fff7f7,
-                    #ffffff
-                );
-        }
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        padding: 36px 32px;
+    }
 
-        .hero::before {
-            content: "";
+    .hero-badge {
+        display: inline-block;
+        padding: 7px 14px;
+        background: #fee2e2;
+        color: #7A1220;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 18px;
+    }
 
-            position: absolute;
+    .hero h2 {
+        margin: 0;
+        font-size: 42px;
+        color: #7A1220;
+        line-height: 1.2;
+    }
 
-            width: 300px;
-            height: 300px;
+    .hero h2 span {
+        color: #A6192E;
+    }
 
-            background: #fee2e2;
-
-            border-radius: 50%;
-
-            top: -150px;
-            left: -100px;
-
-            opacity: 0.6;
-        }
-
-        .hero::after {
-            content: "";
-
-            position: absolute;
-
-            width: 250px;
-            height: 250px;
-
-            background: #fecaca;
-
-            border-radius: 50%;
-
-            bottom: -130px;
-            right: -80px;
-
-            opacity: 0.4;
-        }
-
-        .hero-content {
-            position: relative;
-
-            max-width: 850px;
-
-            margin: auto;
-
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-block;
-
-            padding: 7px 14px;
-
-            background: #fee2e2;
-
-            color: #7A1220;
-
-            border-radius: 20px;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
-            margin-bottom: 18px;
-        }
-
-        .hero h2 {
-            margin: 0;
-
-            font-size: 42px;
-
-            color: #7A1220;
-
-            line-height: 1.2;
-        }
-
-        .hero h2 span {
-            color: #A6192E;
-        }
-
-        .hero p {
-            max-width: 650px;
-
-            margin: 20px auto 0;
-
-            font-size: 17px;
-
-            color: #64748b;
-        }
+    .hero p {
+        max-width: 650px;
+        margin: 20px auto 0;
+        font-size: 17px;
+        color: #64748b;
+    }
 
         /* Buttons */
 
@@ -401,8 +358,46 @@
             font-size: 13px;
         }
 
-        .home-footer strong {
+        .app-footer {
+            background: #7A1220;
+            color: rgba(255,255,255,0.85);
+            margin-top: 60px;
+            padding: 32px 24px 20px;
+            font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', Arial, sans-serif;
+            text-align: center;
+        }
+        .app-footer .footer-top {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .app-footer .footer-brand {
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
             color: white;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+        }
+        .app-footer .footer-contact {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .app-footer .footer-contact strong {
+            color: white;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .app-footer .footer-contact a {
+            color: white;
+            text-decoration: underline;
+        }
+        .app-footer .footer-bottom {
+            max-width: 1100px;
+            margin: 16px auto 0;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
         }
 
         /* Responsive */
@@ -432,8 +427,45 @@
             .hero {
                 padding: 55px 20px;
             }
+            .hero {
+                min-height: 400px;
+            }
+            .hero-content {
+                padding: 24px 20px;
+            }
         }
 
+            
+
+        .posters-section {
+            padding: 40px 24px;
+            background: #F5F4F2;
+        }
+
+        .posters-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .poster-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #E4E0DD;
+
+            aspect-ratio: 1920 / 768;
+        }
+
+        .poster-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
     </style>
 
 </head>
@@ -548,11 +580,19 @@
 
 
 
+
+
 <!-- =====================================
      HERO
 ===================================== -->
 
 <section class="hero">
+    {% load static %}
+    <img
+        src="{% static 'images/campus.jpeg' %}"
+        alt="Faculty of Science and Technology building, Fatoni University"
+        class="hero-bg-img"
+    >
 
     <div class="hero-content">
 
@@ -571,38 +611,25 @@
             of Science and Technology.
         </p>
 
-
         <div class="hero-buttons">
 
             {% if user.is_authenticated %}
 
-                <a
-                    href="{% url 'room_list' %}"
-                    class="home-btn home-btn-primary"
-                >
+                <a href="{% url 'room_list' %}" class="home-btn home-btn-primary">
                     Book a Room
                 </a>
 
-                <a
-                    href="{% url 'device_list' %}"
-                    class="home-btn home-btn-secondary"
-                >
+                <a href="{% url 'device_list' %}" class="home-btn home-btn-secondary">
                     Book a Device
                 </a>
 
             {% else %}
 
-                <a
-                    href="{% url 'login' %}"
-                    class="home-btn home-btn-primary"
-                >
+                <a href="{% url 'login' %}" class="home-btn home-btn-primary">
                     Login to Book
                 </a>
 
-                <a
-                    href="{% url 'register' %}"
-                    class="home-btn home-btn-secondary"
-                >
+                <a href="{% url 'register' %}" class="home-btn home-btn-secondary">
                     Create Account
                 </a>
 
@@ -619,6 +646,16 @@
 <!-- =====================================
      FEATURES
 ===================================== -->
+
+<section class="posters-section">
+    <div class="posters-grid">
+
+        <div class="poster-item">
+            <img src="{% static 'images/poster.png' %}" alt="ประกาศ/โปสเตอร์คณะ">
+        </div>
+
+    </div>
+</section>
 
 <section class="features-section">
 
@@ -642,8 +679,8 @@
 
         <div class="feature-card">
 
-            <div class="feature-icon">
-                R
+           <div class="feature-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1"></rect><circle cx="14" cy="12" r="1"></circle></svg>
             </div>
 
             <h3>
@@ -663,7 +700,7 @@
         <div class="feature-card">
 
             <div class="feature-icon">
-                D
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             </div>
 
             <h3>
@@ -683,7 +720,7 @@
         <div class="feature-card">
 
             <div class="feature-icon">
-                B
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
             </div>
 
             <h3>
@@ -703,7 +740,7 @@
         <div class="feature-card">
 
             <div class="feature-icon">
-                RP
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
             </div>
 
             <h3>
@@ -725,7 +762,7 @@
    style="text-decoration: none; color: inherit;">
 
     <div class="feature-icon">
-        AI
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
     </div>
 
     <h3>
@@ -745,7 +782,7 @@
         <div class="feature-card">
 
             <div class="feature-icon">
-                A
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             </div>
 
             <h3>
@@ -769,17 +806,21 @@
      FOOTER
 ===================================== -->
 
-<footer class="home-footer">
-
-    <strong>
-        Faculty Science Booking System
-    </strong>
-
-    <br>
-
-    Faculty of Science and Technology
-
+<footer class="app-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            FACULTY OF SCIENCE BOOKING SYSTEM
+        </div>
+        <div class="footer-contact">
+            
+            Email: <a href="mailto:science@ftu.ac.th">science@ftu.ac.th</a> | Tel: 086-4810720
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 Faculty Science Booking System. All Rights Reserved.
+    </div>
 </footer>
+
 
 
 </body>
