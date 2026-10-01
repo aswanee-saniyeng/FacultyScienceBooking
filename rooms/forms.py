@@ -13,6 +13,7 @@ class RoomForm(forms.ModelForm):
             'capacity',
             'description',
             'status',
+            'image',
         ]
 
         widgets = {
