@@ -226,8 +226,6 @@
 
             width: 100%;
 
-            padding: 25px;
-
             border-radius: 14px;
 
             border: 1px solid #f1f5f9;
@@ -236,6 +234,15 @@
                 0 4px 15px rgba(0, 0, 0, 0.06);
 
             transition: 0.25s;
+
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .device-card-body {
+            padding: 20px 22px 25px;
         }
 
         .device-card:hover {
@@ -249,27 +256,32 @@
 
         /* Device Icon */
 
-        .device-icon {
-
-            width: 55px;
-            height: 55px;
+        .device-image {
+            width: 100%;
+            aspect-ratio: 16 / 10;
 
             background: #fef2f2;
 
-            color: #A6192E;
+            overflow: hidden;
+        }
 
-            border-radius: 12px;
+        .device-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .device-icon {
+            width: 100%;
+            height: 100%;
+
+            color: #A6192E;
 
             display: flex;
 
             align-items: center;
             justify-content: center;
-
-            font-size: 22px;
-
-            font-weight: bold;
-
-            margin-bottom: 18px;
         }
 
 
@@ -432,6 +444,133 @@
 
         }
 
+        /* Filter Bar */
+
+            .filter-bar {
+                background: white;
+                border-radius: 14px;
+                border: 1px solid #f1f5f9;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+                padding: 20px 24px;
+                margin-bottom: 24px;
+
+                display: flex;
+                align-items: flex-end;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .filter-field {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .filter-field label {
+                font-size: 13px;
+                font-weight: bold;
+                color: #475569;
+            }
+
+            .filter-field input,
+            .filter-field select {
+                padding: 9px 12px;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                font-size: 14px;
+                font-family: inherit;
+            }
+
+            .filter-submit {
+                padding: 10px 20px;
+                background: #A6192E;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .filter-submit:hover {
+                background: #7A1220;
+            }
+
+
+            /* View Tabs */
+
+            .view-tabs {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 24px;
+            }
+
+            .view-tab {
+                padding: 10px 22px;
+                border-radius: 20px;
+                font-weight: bold;
+                font-size: 14px;
+                text-decoration: none;
+                color: #64748b;
+                background: white;
+                border: 1px solid #e2e8f0;
+                transition: 0.2s;
+            }
+
+            .view-tab.active {
+                background: #A6192E;
+                color: white;
+                border-color: #A6192E;
+            }
+
+
+            /* Disabled book button */
+
+            .book-button.disabled {
+                display: block;
+                margin-top: 20px;
+                padding: 11px 16px;
+                background: #e2e8f0;
+                color: #94a3b8;
+                text-align: center;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: not-allowed;
+            }
+
+
+            /* Pagination */
+
+            .pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+                margin-top: 32px;
+            }
+
+            .pagination a {
+                padding: 8px 16px;
+                background: white;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                color: #A6192E;
+                font-weight: bold;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .pagination a:hover {
+                background: #fef2f2;
+            }
+
+            .pagination-current {
+                font-size: 14px;
+                color: #64748b;
+            }
+
     </style>
 
 </head>
@@ -479,6 +618,11 @@
 
     <!-- Navigation Buttons -->
 
+    <div class="devices-container">
+
+
+    <!-- Navigation Buttons -->
+
     <div class="devices-navigation">
 
         <a href="{% url 'home' %}"
@@ -499,19 +643,57 @@
     </div>
 
 
-
     <div class="page-heading">
 
         <h2>
-            Available Devices
+            Book Classrooms &amp; Equipment
         </h2>
 
         <p>
-            Check device availability and make a booking.
+            Check availability and make a booking.
         </p>
 
     </div>
 
+
+    <div class="view-tabs">
+
+        <a href="{% url 'room_list' %}?date={{ selected_date }}&slot={{ selected_slot }}"
+           class="view-tab">
+            Classrooms
+        </a>
+
+        <a href="{% url 'device_list' %}?date={{ selected_date }}&slot={{ selected_slot }}"
+           class="view-tab active">
+            Devices
+        </a>
+
+    </div>
+
+
+    <form method="get" class="filter-bar">
+
+        <div class="filter-field">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" value="{{ selected_date }}">
+        </div>
+
+        <div class="filter-field">
+            <label for="slot">Time</label>
+            <select id="slot" name="slot">
+                {% for value, label in time_slots %}
+                    <option value="{{ value }}" {% if value == selected_slot %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="filter-submit">
+            Check Availability
+        </button>
+
+    </form>
 
 
     {% if devices %}
@@ -525,91 +707,93 @@
 
                 <div class="device-card">
 
-
-                    <div class="device-icon">
-                        D
+                    <div class="device-image">
+                        {% if device.image %}
+                            <img src="{{ device.image.url }}" alt="{{ device.device_name }}">
+                        {% else %}
+                            <div class="device-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                        {% endif %}
                     </div>
 
+                    <div class="device-card-body">
 
-                    <h2>
-                        {{ device.device_name }}
-                    </h2>
-
-
-                    <p class="device-info">
-
-                        <strong>
-                            Type:
-                        </strong>
-
-                        {{ device.device_type }}
-
-                    </p>
+                        <h2>
+                            {{ device.device_name }}
+                        </h2>
 
 
-                    <p class="device-info">
+                        <p class="device-info">
 
-                        <strong>
-                            Quantity:
-                        </strong>
+                            <strong>
+                                Type:
+                            </strong>
 
-                        {{ device.quantity }}
+                            {{ device.device_type }}
 
-                    </p>
-
-
-                    <p class="device-info">
-
-                        <strong>
-                            Description:
-                        </strong>
-
-                        {{ device.description|default:"-" }}
-
-                    </p>
+                        </p>
 
 
-                    <p class="device-info">
+                        <p class="device-info">
 
-                        <strong>
-                            Status:
-                        </strong>
+                            <strong>
+                                Quantity:
+                            </strong>
+
+                            {{ device.quantity }}
+
+                        </p>
 
 
-                        {% if device.status == "available" %}
+                        <p class="device-info">
 
-                            <span class="status-badge available">
+                            <strong>
+                                Status:
+                            </strong>
 
-                                Available
 
-                            </span>
+                            {% if device.is_available_now %}
+
+                                <span class="status-badge available">
+
+                                    Available
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge unavailable">
+
+                                    Unavailable
+
+                                </span>
+
+                            {% endif %}
+
+                        </p>
+
+
+                        {% if device.is_available_now %}
+
+                            <a
+                                href="{% url 'book_device' device.id %}?date={{ selected_date }}&slot={{ selected_slot }}"
+                                class="book-button"
+                            >
+
+                                Book This Device
+
+                            </a>
 
                         {% else %}
 
-                            <span class="status-badge unavailable">
-
-                                Unavailable
-
+                            <span class="book-button disabled">
+                                Not Available
                             </span>
 
                         {% endif %}
 
-                    </p>
-
-
-                    {% if device.status == "available" %}
-
-                        <a
-                            href="{% url 'book_device' device.id %}"
-                            class="book-button"
-                        >
-
-                            Book This Device
-
-                        </a>
-
-                    {% endif %}
-
+                    </div>
 
                 </div>
 
@@ -618,6 +802,31 @@
 
 
         </div>
+
+
+        {% if devices.has_other_pages %}
+
+            <div class="pagination">
+
+                {% if devices.has_previous %}
+                    <a href="?date={{ selected_date }}&slot={{ selected_slot }}&page={{ devices.previous_page_number }}">
+                        &laquo; Previous
+                    </a>
+                {% endif %}
+
+                <span class="pagination-current">
+                    Page {{ devices.number }} of {{ devices.paginator.num_pages }}
+                </span>
+
+                {% if devices.has_next %}
+                    <a href="?date={{ selected_date }}&slot={{ selected_slot }}&page={{ devices.next_page_number }}">
+                        Next &raquo;
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% endif %}
 
 
     {% else %}
@@ -643,6 +852,7 @@
 
 
 <style>
+
     .app-footer {
         background: #7A1220;
         color: rgba(255,255,255,0.85);

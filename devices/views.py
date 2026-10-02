@@ -1,14 +1,54 @@
+from datetime import date
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 
+from bookings.models import Booking
 from .models import Device
 from .forms import DeviceForm
 
 
+TIME_SLOTS = [
+    ('08:00-10:00', '08:00 - 10:00'),
+    ('10:00-12:00', '10:00 - 12:00'),
+    ('13:00-15:00', '13:00 - 15:00'),
+    ('15:00-17:00', '15:00 - 17:00'),
+]
+
+
 def device_list(request):
 
-    devices = Device.objects.all()
+    selected_date = request.GET.get('date') or date.today().isoformat()
+    selected_slot = request.GET.get('slot') or TIME_SLOTS[0][0]
+    start_time, end_time = selected_slot.split('-')
 
-    return render(request, 'devices/device_list.html', {'devices': devices})
+    all_devices = Device.objects.all().order_by('device_name')
+
+    busy_device_ids = set(
+        Booking.objects.filter(
+            device__isnull=False,
+            booking_date=selected_date,
+            status__in=['pending', 'approved'],
+            start_time__lt=end_time,
+            end_time__gt=start_time,
+        ).values_list('device_id', flat=True)
+    )
+
+    for device in all_devices:
+        device.is_available_now = (
+            device.status == 'available'
+            and device.id not in busy_device_ids
+        )
+
+    paginator = Paginator(all_devices, 8)
+    devices = paginator.get_page(request.GET.get('page'))
+
+    context = {
+        'devices': devices,
+        'time_slots': TIME_SLOTS,
+        'selected_date': selected_date,
+        'selected_slot': selected_slot,
+    }
+    return render(request, 'devices/device_list.html', context)
 
 
 def book_device(request, device_id):
@@ -46,7 +86,7 @@ def add_device(request):
 
     if request.method == 'POST':
 
-        form = DeviceForm(request.POST)
+        form = DeviceForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
@@ -78,6 +118,7 @@ def edit_device(request, device_id):
 
         form = DeviceForm(
             request.POST,
+            request.FILES,
             instance=device
         )
 
