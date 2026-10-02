@@ -23,7 +23,21 @@
 
         body {
             background: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
+        .devices-container {
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .app-footer {
+            margin-top: auto;
+        }
+       
 
 
         /* Header */
@@ -200,58 +214,45 @@
         }
 
 
-        /* Device Grid */
+       /* Device Grid */
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
 
-        .device-grid {
+@media (max-width: 900px) {
+    .device-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
-            display: grid;
+@media (max-width: 600px) {
+    .device-grid { grid-template-columns: 1fr; }
+}
 
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(290px, 360px)
-                );
+/* Device Card */
+.device-card {
+    background: white;
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    transition: 0.25s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
 
-            gap: 22px;
+.device-card-body {
+    padding: 24px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 
-            justify-content: start;
-        }
-
-
-        /* Device Card */
-
-        .device-card {
-
-            background: white;
-
-            width: 100%;
-
-            border-radius: 14px;
-
-            border: 1px solid #f1f5f9;
-
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.06);
-
-            transition: 0.25s;
-
-            overflow: hidden;
-
-            display: flex;
-            flex-direction: column;
-        }
-
-        .device-card-body {
-            padding: 20px 22px 25px;
-        }
-
-        .device-card:hover {
-
-            transform: translateY(-5px);
-
-            box-shadow:
-                0 10px 25px rgba(0, 0, 0, 0.10);
-        }
+/* ดันปุ่มจองลงล่างสุด ให้ทุกการ์ดในแถวปุ่มอยู่ระดับเดียวกัน */
+.device-card-body .book-button {
+    margin-top: auto;
+}
 
 
         /* Device Icon */
@@ -614,11 +615,6 @@
 ===================================== -->
 
 <div class="devices-container">
-
-
-    <!-- Navigation Buttons -->
-
-    <div class="devices-container">
 
 
     <!-- Navigation Buttons -->

@@ -20,7 +20,11 @@ def create_booking(request, room_id=None, device_id=None):
     if device_id:
         device = Device.objects.get(id=device_id)
 
+    # =========================
+    # POST - Submit booking
+    # =========================
     if request.method == 'POST':
+
         form = BookingForm(request.POST)
 
         if form.is_valid():
@@ -73,27 +77,31 @@ def create_booking(request, room_id=None, device_id=None):
 
                 return redirect('home')
 
-        else:
-            initial_data = {}
+    # =========================
+    # GET - Open booking page
+    # =========================
+    else:
 
-            selected_date = request.GET.get('date')
-            selected_slot = request.GET.get('slot')
+        initial_data = {}
 
-            if selected_date:
-                initial_data['booking_date'] = selected_date
+        selected_date = request.GET.get('date')
+        selected_slot = request.GET.get('slot')
 
-            if selected_slot and '-' in selected_slot:
-                start_time, end_time = selected_slot.split('-')
-                initial_data['start_time'] = start_time
-                initial_data['end_time'] = end_time
+        if selected_date:
+            initial_data['booking_date'] = selected_date
 
-            if room:
-                initial_data['room'] = room
+        if selected_slot and '-' in selected_slot:
+            start_time, end_time = selected_slot.split('-')
+            initial_data['start_time'] = start_time
+            initial_data['end_time'] = end_time
 
-            elif device:
-                initial_data['device'] = device
+        if room:
+            initial_data['room'] = room
 
-            form = BookingForm(initial=initial_data)
+        elif device:
+            initial_data['device'] = device
+
+        form = BookingForm(initial=initial_data)
 
     return render(
         request,

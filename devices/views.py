@@ -39,7 +39,7 @@ def device_list(request):
             and device.id not in busy_device_ids
         )
 
-    paginator = Paginator(all_devices, 8)
+    paginator = Paginator(all_devices, 9)
     devices = paginator.get_page(request.GET.get('page'))
 
     context = {

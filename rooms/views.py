@@ -38,7 +38,7 @@ def room_list(request):
             and room.id not in busy_room_ids
         )
 
-    paginator = Paginator(all_rooms, 8)
+    paginator = Paginator(all_rooms, 9)
     rooms = paginator.get_page(request.GET.get('page'))
 
     context = {
