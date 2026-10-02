@@ -169,22 +169,28 @@
         /* Room Card */
 
         .room-card {
-    background: white;
+            background: white;
 
-    width: 100%;
+            width: 100%;
 
-    padding: 25px;
+            border-radius: 14px;
 
-    border-radius: 14px;
+            border: 1px solid #f1f5f9;
 
-    border: 1px solid #f1f5f9;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
 
-    box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: 0.25s;
 
-    transition: 0.25s;
-}
+            overflow: hidden;
 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-card-body {
+            padding: 20px 22px 25px;
+        }
         .room-card:hover {
 
             transform: translateY(-5px);
@@ -196,29 +202,33 @@
 
         /* Room Icon */
 
-        .room-icon {
-
-            width: 55px;
-            height: 55px;
+        .room-image {
+            width: 100%;
+            aspect-ratio: 16 / 10;
 
             background: #fef2f2;
 
-            color: #A6192E;
+            overflow: hidden;
+        }
 
-            border-radius: 12px;
+        .room-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .room-icon {
+            width: 100%;
+            height: 100%;
+
+            color: #A6192E;
 
             display: flex;
 
             align-items: center;
             justify-content: center;
-
-            font-size: 24px;
-
-            font-weight: bold;
-
-            margin-bottom: 18px;
         }
-
 
         /* Room Name */
 
@@ -344,6 +354,132 @@
             color: #64748b;
         }
 
+        /* Filter Bar */
+
+        .filter-bar {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+            padding: 20px 24px;
+            margin-bottom: 24px;
+
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-field label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #475569;
+        }
+
+        .filter-field input,
+        .filter-field select {
+            padding: 9px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .filter-submit {
+            padding: 10px 20px;
+            background: #A6192E;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filter-submit:hover {
+            background: #7A1220;
+        }
+
+
+        /* View Tabs */
+
+        .view-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .view-tab {
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            color: #64748b;
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+
+        .view-tab.active {
+            background: #A6192E;
+            color: white;
+            border-color: #A6192E;
+        }
+
+
+        /* Disabled book button */
+
+        .book-button.disabled {
+            display: block;
+            margin-top: 20px;
+            padding: 11px 16px;
+            background: #e2e8f0;
+            color: #94a3b8;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: not-allowed;
+        }
+
+
+        /* Pagination */
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .pagination a {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            color: #A6192E;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .pagination a:hover {
+            background: #fef2f2;
+        }
+
+        .pagination-current {
+            font-size: 14px;
+            color: #64748b;
+        }
 
         /* Responsive */
 
@@ -422,15 +558,54 @@
     <div class="page-heading">
 
         <h2>
-            Available Classrooms
+            Book Classrooms &amp; Equipment
         </h2>
 
         <p>
-            Check classroom availability and make a booking.
+            Check availability and make a booking.
         </p>
 
     </div>
 
+
+    <div class="view-tabs">
+
+        <a href="{% url 'room_list' %}?date={{ selected_date }}&slot={{ selected_slot }}"
+           class="view-tab active">
+            Classrooms
+        </a>
+
+        <a href="{% url 'device_list' %}?date={{ selected_date }}&slot={{ selected_slot }}"
+           class="view-tab">
+            Devices
+        </a>
+
+    </div>
+
+
+    <form method="get" class="filter-bar">
+
+        <div class="filter-field">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" value="{{ selected_date }}">
+        </div>
+
+        <div class="filter-field">
+            <label for="slot">Time</label>
+            <select id="slot" name="slot">
+                {% for value, label in time_slots %}
+                    <option value="{{ value }}" {% if value == selected_slot %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="filter-submit">
+            Check Availability
+        </button>
+
+    </form>
 
 
     {% if rooms %}
@@ -444,91 +619,93 @@
 
                 <div class="room-card">
 
-
-                    <div class="room-icon">
-                        R
+                    <div class="room-image">
+                        {% if room.image %}
+                            <img src="{{ room.image.url }}" alt="{{ room.room_name }}">
+                        {% else %}
+                            <div class="room-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1"></rect><circle cx="14" cy="12" r="1"></circle></svg>
+                            </div>
+                        {% endif %}
                     </div>
 
+                    <div class="room-card-body">
 
-                    <h2>
-                        Room {{ room.room_name }}
-                    </h2>
-
-
-                    <p class="room-info">
-
-                        <strong>
-                            Building:
-                        </strong>
-
-                        {{ room.building }}
-
-                    </p>
+                        <h2>
+                            Room {{ room.room_name }}
+                        </h2>
 
 
-                    <p class="room-info">
+                        <p class="room-info">
 
-                        <strong>
-                            Capacity:
-                        </strong>
+                            <strong>
+                                Building:
+                            </strong>
 
-                        {{ room.capacity }} people
+                            {{ room.building }}
 
-                    </p>
-
-
-                    <p class="room-info">
-
-                        <strong>
-                            Description:
-                        </strong>
-
-                        {{ room.description|default:"-" }}
-
-                    </p>
+                        </p>
 
 
-                    <p class="room-info">
+                        <p class="room-info">
 
-                        <strong>
-                            Status:
-                        </strong>
+                            <strong>
+                                Capacity:
+                            </strong>
+
+                            {{ room.capacity }} people
+
+                        </p>
 
 
-                        {% if room.status == "available" %}
+                        <p class="room-info">
 
-                            <span class="status-badge available">
+                            <strong>
+                                Status:
+                            </strong>
 
-                                Available
 
-                            </span>
+                            {% if room.is_available_now %}
+
+                                <span class="status-badge available">
+
+                                    Available
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge unavailable">
+
+                                    Unavailable
+
+                                </span>
+
+                            {% endif %}
+
+                        </p>
+
+
+                        {% if room.is_available_now %}
+
+                            <a
+                                href="{% url 'book_room' room.id %}?date={{ selected_date }}&slot={{ selected_slot }}"
+                                class="book-button"
+                            >
+
+                                Book This Room
+
+                            </a>
 
                         {% else %}
 
-                            <span class="status-badge unavailable">
-
-                                Unavailable
-
+                            <span class="book-button disabled">
+                                Not Available
                             </span>
 
                         {% endif %}
 
-                    </p>
-
-
-                    {% if room.status == "available" %}
-
-                        <a
-                            href="{% url 'book_room' room.id %}"
-                            class="book-button"
-                        >
-
-                            Book This Room
-
-                        </a>
-
-                    {% endif %}
-
+                    </div>
 
                 </div>
 
@@ -537,6 +714,31 @@
 
 
         </div>
+
+
+        {% if rooms.has_other_pages %}
+
+            <div class="pagination">
+
+                {% if rooms.has_previous %}
+                    <a href="?date={{ selected_date }}&slot={{ selected_slot }}&page={{ rooms.previous_page_number }}">
+                        &laquo; Previous
+                    </a>
+                {% endif %}
+
+                <span class="pagination-current">
+                    Page {{ rooms.number }} of {{ rooms.paginator.num_pages }}
+                </span>
+
+                {% if rooms.has_next %}
+                    <a href="?date={{ selected_date }}&slot={{ selected_slot }}&page={{ rooms.next_page_number }}">
+                        Next &raquo;
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% endif %}
 
 
     {% else %}

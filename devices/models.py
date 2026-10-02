@@ -16,6 +16,8 @@ class Device(models.Model):
 
     description = models.TextField(blank=True)
 
+    image = models.ImageField(upload_to='devices/', blank=True, null=True)
+
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,

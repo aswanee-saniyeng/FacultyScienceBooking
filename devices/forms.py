@@ -13,6 +13,7 @@ class DeviceForm(forms.ModelForm):
             'quantity',
             'description',
             'status',
+            'image',
         ]
 
         widgets = {

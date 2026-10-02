@@ -73,15 +73,27 @@ def create_booking(request, room_id=None, device_id=None):
 
                 return redirect('home')
 
-    else:
-        if room:
-            form = BookingForm(initial={'room': room})
-
-        elif device:
-            form = BookingForm(initial={'device': device})
-
         else:
-            form = BookingForm()
+            initial_data = {}
+
+            selected_date = request.GET.get('date')
+            selected_slot = request.GET.get('slot')
+
+            if selected_date:
+                initial_data['booking_date'] = selected_date
+
+            if selected_slot and '-' in selected_slot:
+                start_time, end_time = selected_slot.split('-')
+                initial_data['start_time'] = start_time
+                initial_data['end_time'] = end_time
+
+            if room:
+                initial_data['room'] = room
+
+            elif device:
+                initial_data['device'] = device
+
+            form = BookingForm(initial=initial_data)
 
     return render(
         request,
