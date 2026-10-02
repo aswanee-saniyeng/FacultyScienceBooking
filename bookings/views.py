@@ -20,62 +20,63 @@ def create_booking(request, room_id=None, device_id=None):
     if device_id:
         device = Device.objects.get(id=device_id)
 
+<<<<<<< HEAD
     # =========================
     # POST - Submit booking
     # =========================
     if request.method == 'POST':
 
         form = BookingForm(request.POST)
+=======
+        if request.method == 'POST':
+            form = BookingForm(request.POST)
+>>>>>>> d654ec89752c26836767092f0c323650862db46a
 
-        if form.is_valid():
+            if form.is_valid():
 
-            booking_date = form.cleaned_data['booking_date']
-            start_time = form.cleaned_data['start_time']
-            end_time = form.cleaned_data['end_time']
-            selected_room = form.cleaned_data['room']
-            selected_device = form.cleaned_data['device']
+                booking_date = form.cleaned_data['booking_date']
+                start_time = form.cleaned_data['start_time']
+                end_time = form.cleaned_data['end_time']
+                selected_room = form.cleaned_data['room']
+                selected_device = form.cleaned_data['device']
 
-            # Check for overlapping bookings
-            overlapping_bookings = Booking.objects.filter(
-                booking_date=booking_date,
-                start_time__lt=end_time,
-                end_time__gt=start_time
-            ).exclude(
-                status__in=['cancelled', 'rejected']
-            )
+                overlapping_bookings = Booking.objects.filter(
+                    booking_date=booking_date,
+                    start_time__lt=end_time,
+                    end_time__gt=start_time
+                ).exclude(
+                    status__in=['cancelled', 'rejected']
+                )
 
-            # Check Room conflict
-            if selected_room:
-                room_conflict = overlapping_bookings.filter(
-                    room=selected_room
-                ).exists()
+                if selected_room:
+                    room_conflict = overlapping_bookings.filter(
+                        room=selected_room
+                    ).exists()
 
-                if room_conflict:
-                    form.add_error(
-                        'room',
-                        'This room is already booked during the selected time.'
-                    )
+                    if room_conflict:
+                        form.add_error(
+                            'room',
+                            'This room is already booked during the selected time.'
+                        )
 
-            # Check Device conflict
-            if selected_device:
-                device_conflict = overlapping_bookings.filter(
-                    device=selected_device
-                ).exists()
+                if selected_device:
+                    device_conflict = overlapping_bookings.filter(
+                        device=selected_device
+                    ).exists()
 
-                if device_conflict:
-                    form.add_error(
-                        'device',
-                        'This device is already booked during the selected time.'
-                    )
+                    if device_conflict:
+                        form.add_error(
+                            'device',
+                            'This device is already booked during the selected time.'
+                        )
 
-            # Save only if there is no conflict
-            if not form.errors:
+                if not form.errors:
 
-                booking = form.save(commit=False)
-                booking.user = request.user
-                booking.save()
+                    booking = form.save(commit=False)
+                    booking.user = request.user
+                    booking.save()
 
-                return redirect('home')
+                    return redirect('home')
 
     # =========================
     # GET - Open booking page
@@ -103,15 +104,15 @@ def create_booking(request, room_id=None, device_id=None):
 
         form = BookingForm(initial=initial_data)
 
-    return render(
-        request,
-        'bookings/create_booking.html',
-        {
-            'form': form,
-            'room': room,
-            'device': device,
-        }
-    )
+        return render(
+            request,
+            'bookings/create_booking.html',
+            {
+                'form': form,
+                'room': room,
+                'device': device,
+            }
+        )
 
 
 @login_required
